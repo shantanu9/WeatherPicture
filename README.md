@@ -1,10 +1,10 @@
-# pure-numpy-feedfowardNN
+<!-- # pure-numpy-feedfowardNN
 Simple feedforward neural network class "handmade" in pure python+numpy  
 Winner of Siraj Ravel's [coding challange](https://youtu.be/p69khggr1Jo?t=8m48s)
 
 ## Characteristics
 * Fully connected feed forward neural network with as many hidden layers as needed, of any size.
-* Implements backpropagation : [link 1](http://neuralnetworksanddeeplearning.com/chap2.html), [link 2](https://www.youtube.com/watch?v=TrxeIv7RD_0&t=109s), [link 3](https://www.youtube.com/watch?v=CaRzkVaC_rs) 
+* Implements backpropagation : [link 1](http://neuralnetworksanddeeplearning.com/chap2.html), [link 2](https://www.youtube.com/watch?v=TrxeIv7RD_0&t=109s), [link 3](https://www.youtube.com/watch?v=CaRzkVaC_rs)
   (does not implement gradient checking)
 * Uses gradient descent for optimization
 * Uses Sum Squared Error cost function
@@ -21,7 +21,7 @@ Winner of Siraj Ravel's [coding challange](https://youtu.be/p69khggr1Jo?t=8m48s)
   `nn.train(features, targets, num_epochs, learning_rate)`
 4. Predict  
   `nn.predict(features)`
-  
+
 The `nn.train()` method has an optional parameter called `stop_accuracy`. At the end of each epoch the mean loss is calculated and if it is under the specified threshold than the training stops. This avoids training longer than necessary. By looking at the number of epochs needed to reach the threshold, it gives us a good metric as to the performance of our hyperparameters.
 
 ## Example: XOR function
@@ -31,4 +31,4 @@ The Jupyter Notebook shows how the network can be used to approximate the XOR fu
 ![Optimization](https://github.com/ludobouan/pure-numpy-feedfowardNN/blob/master/example/optimization.png)
 
 ## Dependencies
-* Numpy
+* Numpy -->
