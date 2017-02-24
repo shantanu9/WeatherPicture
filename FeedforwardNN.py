@@ -1,4 +1,9 @@
 import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import pandas as pd
+import sklearn
+import seaborn as sns
 np.seterr(over='ignore')
 
 class NeuralNetwork():
@@ -41,7 +46,7 @@ class NeuralNetwork():
     def simple_error(self, outputs, targets):
         return targets - outputs
 
-    def sum_squared_error(self, outputs, targets):
+    def sum_squared_error(self, outputs, targets):                             # squared error function is used to reduce the cost
         return 0.5 * np.mean(np.sum(np.power(outputs - targets, 2), axis=1))
 
     def __back_propagate(self, output, target):
@@ -60,15 +65,15 @@ class NeuralNetwork():
         for layer in range(1, self.num_layers):
             self.adjustments[layer] += np.dot(deltas[layer+1], output[layer].T).T
 
-    def __gradient_descente(self, batch_size, learning_rate):
-        # Calculate partial derivative and take a step in that direction
+    def __gradient_descent(self, batch_size, learning_rate):
+        # Calculate partial Cleanderivative and take a step in that direction
         for layer in range(1, self.num_layers):
             partial_d = (1/batch_size) * self.adjustments[layer]
             self.weights[layer][:-1, :] += learning_rate * -partial_d
             self.weights[layer][-1, :] += learning_rate*1e-3 * -partial_d[-1, :]
 
 
-    def train(self, inputs, targets, num_epochs, learning_rate=1, stop_accuracy=1e-5):
+    def train(self, inputs, targets, num_epochs, learning_rate = 1, stop_accuracy=1e-5):
         error = []
         for iteration in range(num_epochs):
             for i in range(len(inputs)):
@@ -84,7 +89,7 @@ class NeuralNetwork():
                 # Calculate Adjustements
                 self.__back_propagate(output, y)
 
-            self.__gradient_descente(i, learning_rate)
+            self.__gradient_descent(i, learning_rate)
 
             # Check if accuarcy criterion is satisfied
             if np.mean(error[-(i+1):]) < stop_accuracy and iteration > 0:
@@ -96,7 +101,8 @@ class NeuralNetwork():
 
 if __name__ == "__main__":
 
-    # ----------- XOR Function -----------------
+    # We have created a Feedforward NN with initial input layer.
+    # And, It being trained on sample data to output the iterations and error.
 
     # Create instance of a neural network
     nn = NeuralNetwork()
@@ -105,13 +111,21 @@ if __name__ == "__main__":
     nn.add_layer((2, 9))
     nn.add_layer((9, 1))
 
-    # XOR function
-    training_data = np.asarray([[0, 0, 1 ], [0, 1, 1], [1, 0, 1]]).reshape(3, 3, 1)  #input [1,1] # reshape gives a new shape to an array without changing its data.
+    #read the data from the file
+    # co2_df = pd.read_csv('global_co2.csv')
+    # temp_df = pd.read_csv('annual_temp.csv')
+    # print(co2_df.head())
+    # print(temp_df.head())
+
+
+    # XOR function sample data to train
+    training_data = np.asarray([[0, 0], [0, 1], [1, 0]]).reshape(3, 2, 1)  #input [1,1] # reshape gives a new shape to an array without changing its data.
     # print training_data
     training_labels = np.asarray([[0], [1], [1]])                             #output [0]
 
-    error, iteration = nn.train(training_data, training_labels, 5000)
+    error, iteration = nn.train(training_data, training_labels, 5)
     print('Error = ', np.mean(error[-4:]))
     print('Epoches needed to train = ', iteration)
 
-    # nn.predict(testing_data)
+    # prediction function
+    # nn.predict([1, 1])
